@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIE2 – Academic-Industry Exchange | FSS, UWI St. Augustine</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+    a { color: #c8102e; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Header / Hero ── */
+    .hero {
+      background: #1a1a2e;
+      color: #ffffff;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(135deg, #c8102e 0%, #8b0000 100%);
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 32px 40px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .hero-logo {
+      flex-shrink: 0;
+    }
+    .hero-logo img {
+      width: 80px;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
+    /* Fallback UWI badge if no logo available */
+    .uwi-badge {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      line-height: 1.2;
+      letter-spacing: 1px;
+    }
+    .hero-text {
+      flex: 1;
+    }
+    .hero-eyebrow {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+    .hero-title {
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .hero-subtitle {
+      font-size: clamp(14px, 2vw, 18px);
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: rgba(255,255,255,0.85);
+    }
+    .hero-meta-item .icon {
+      color: #f0a0a0;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .hero-dean {
+      background: rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding: 14px 32px;
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-dean strong {
+      color: rgba(255,255,255,0.95);
+    }
+
+    /* ── Layout Container ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    /* ── Intro Text ── */
+    .intro {
+      background: #fff;
+      border-left: 4px solid #c8102e;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      border-radius: 0 6px 6px 0;
+      font-size: 15px;
+      color: #333;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .intro p + p {
+      margin-top: 10px;
+    }
+
+    /* ── Tab Navigation ── */
+    .tabs-nav {
+      display: flex;
+      gap: 0;
+      border-bottom: 3px solid #c8102e;
+      margin-bottom: 36px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 14px 20px;
+      border: none;
+      background: #e8e8e6;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, color 0.2s;
+      border-radius: 6px 6px 0 0;
+      text-align: left;
+      line-height: 1.4;
+    }
+    .tab-btn:first-child { margin-right: 4px; }
+    .tab-btn .session-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 3px;
+      font-weight: 400;
+    }
+    .tab-btn.active {
+      background: #c8102e;
+      color: #ffffff;
+    }
+    .tab-btn.active .session-label { color: rgba(255,255,255,0.7); }
+    .tab-btn:hover:not(.active) {
+      background: #d9d9d7;
+      color: #1a1a1a;
+    }
+
+    /* ── Tab Panels ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Session Header ── */
+    .session-header {
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #ddd;
+    }
+    .session-tag {
+      display: inline-block;
+      background: #c8102e;
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+    .session-title {
+      font-size: clamp(18px, 3vw, 26px);
+      color: #1a1a2e;
+      font-weight: bold;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .session-moderator-line {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #666;
+    }
+    .session-moderator-line strong { color: #333; }
+
+    /* ── Panelist Grid ── */
+    .panelists {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    /* ── Panelist Card ── */
+    .card {
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+      transform: translateY(-2px);
+    }
+    .card.moderator-card {
+      border-top: 4px solid #c8102e;
+      grid-column: 1 / -1; /* span full width */
+    }
+    @media (min-width: 580px) {
+      .card.moderator-card {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      .card.moderator-card .card-photo-wrap {
+        grid-row: 1 / 3;
+      }
+    }
+
+    .card-photo-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #e8e8e6;
+      flex-shrink: 0;
+    }
+    .card.moderator-card .card-photo-wrap {
+      aspect-ratio: unset;
+      height: 100%;
+      min-height: 220px;
+    }
+    .card-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .card-body {
+      padding: 18px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #c8102e;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card-name {
+      font-size: 17px;
+      font-weight: bold;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .card-org {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .card-bio {
+      font-size: 13.5px;
+      color: #444;
+      line-height: 1.65;
+      flex: 1;
+    }
+    .card-bio p + p { margin-top: 8px; }
+
+    /* ── Footer ── */
+    footer {
+      background: #1a1a2e;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 24px 16px;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.9); }
+
+    /* ── Responsive ── */
+    @media (max-width: 580px) {
+      .hero-inner { flex-direction: column; gap: 16px; }
+      .hero::before { width: 100%; clip-path: none; opacity: 0.3; }
+      .tabs-nav { flex-direction: column; border-bottom: none; gap: 4px; }
+      .tab-btn { border-radius: 6px; }
+      .tab-btn.active { border-radius: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HERO / HEADER ══════════════ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo">
+      <div class="uwi-badge">UWI</div>
+    </div>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Faculty of Social Sciences &nbsp;|&nbsp; The UWI, St. Augustine</p>
+      <h1 class="hero-title">Academic–Industry Exchange</h1>
+      <p class="hero-subtitle">Advancing Impact-Driven Collaboration</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="icon">📅</span>
+          <span>Wednesday, 15 April 2026 &nbsp;|&nbsp; 9:00 AM</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="icon">📍</span>
+          <span>Teaching &amp; Learning Complex (TLC), Lecture Theatres A &amp; B<br>The UWI, St. Augustine Campus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-dean">
+    Hosted by <strong>Dr Acolla Lewis-Cameron</strong>, Dean, Faculty of Social Sciences
+  </div>
+</header>
+
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<main class="container">
+
+  <div class="intro">
+    <p>The Faculty of Social Sciences presents the second iteration of its <strong>Academic–Industry Exchange (AIE)</strong> — a forum designed to bridge university research with real-world industry challenges. Two concurrent sessions run simultaneously, each bringing together academics and industry panelists to explore pressing issues affecting business and society in Trinidad and Tobago and the Caribbean.</p>
+    <p>Select a session below to meet the panelists.</p>
+  </div>
+
+  <!-- Tab Navigation -->
+  <nav class="tabs-nav" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true"
+            aria-controls="session1" id="tab1" onclick="switchTab(1)">
+      <span class="session-label">Session 1</span>
+      Creating Space for Diversity in the T&amp;T Workplace
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false"
+            aria-controls="session2" id="tab2" onclick="switchTab(2)">
+      <span class="session-label">Session 2</span>
+      When One Batch Puts the Business at Risk
+    </button>
+  </nav>
+
+  <!-- ════ SESSION 1 ════ -->
+  <section class="tab-panel active" id="session1" role="tabpanel" aria-labelledby="tab1">
+
+    <div class="session-header">
+      <span class="session-tag">Session 1</span>
+      <h2 class="session-title">Creating Space for Diversity in the Trinidad and Tobago Workplace</h2>
+      <p class="session-moderator-line">Moderated by <strong>Dr Bephyer Parey</strong>, SALISES, The UWI St. Augustine</p>
+    </div>
+
+    <div class="panelists">
+
+      <!-- Ms Lesli Hay-Pilgrim -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/pilgrim.jpg" alt="Ms Lesli Hay-Pilgrim" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Ms Lesli Hay-Pilgrim</h3>
+          <p class="card-org">Manager, Employee Experience, Republic Financial Holdings Limited</p>
+          <div class="card-bio">
+            <p>Lesli Hay-Pilgrim leads the strategic integration of Diversity, Equity and Inclusion (DEI) policies and practices across RFHL's operations in Trinidad and Tobago and the Caribbean. She supports executives and teams in creating workplaces where staff feel valued, respected, and empowered to perform at their best.</p>
+            <p>Over four years, she has cultivated partnerships with local and regional stakeholders, championing informed DEI conversations and sustainable initiatives that improve accessibility and advance the Republic Group as a recognised equitable employer.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ms Qushiba La Fleur -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/lafleur.jpeg" alt="Ms Qushiba La Fleur" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Ms Qushiba La Fleur</h3>
+          <p class="card-org">Founder &amp; CEO, WeCare Deaf Support Network; Sign Language Specialist &amp; DEI Coordinator, Nestlé T&amp;T</p>
+          <div class="card-bio">
+            <p>Qushiba La Fleur is a disability inclusion advocate and strategic leader committed to advancing equity for the deaf and hard-of-hearing community in Trinidad and Tobago. As Founder and CEO of WeCare Deaf Support Network, she focuses on communication access, early intervention, and family-centred support.</p>
+            <p>At Nestlé T&amp;T she leads workplace inclusion initiatives and sensitisation training. Her work bridges community advocacy, corporate systems, and public engagement, with a focus on building environments where persons with disabilities can participate fully and lead confidently.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr Tyehimba Salandy -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/salandy.jpg" alt="Dr Tyehimba Salandy" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Dr Tyehimba Salandy</h3>
+          <p class="card-org">Sociologist, Educator &amp; Farmer; Director, IKER Institute</p>
+          <div class="card-bio">
+            <p>Tyehimba Salandy is a sociologist, educator, and farmer whose research focuses on globalisation, development, mental health, inequality, and Caribbean radical thought — with particular interest in inequalities in the production of knowledge.</p>
+            <p>As a director at the Institute of Indigenous Knowledge, Empowerment and Research (IKER Institute), he leads ongoing projects encouraging ecological livelihoods and social justice. The IKER Institute manages a community-based ecological farm and nature park where agriculture is used as a basis for learning about history, society, and self.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr Bephyer Parey – MODERATOR -->
+      <article class="card moderator-card">
+        <div class="card-photo-wrap">
+          <img src="images/parey.jpeg" alt="Dr Bephyer Parey" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Moderator</span>
+          <h3 class="card-name">Dr Bephyer Parey</h3>
+          <p class="card-org">Junior Research Fellow, SALISES, The UWI St. Augustine</p>
+          <div class="card-bio">
+            <p>Dr Bephyer Parey is a Junior Research Fellow at the Sir Arthur Lewis Institute of Social and Economic Studies (SALISES) at the St Augustine Campus of the University of the West Indies. She was awarded her PhD in Social Policy from the UWI in June 2019 and joined SALISES staff in August 2019.</p>
+            <p>Her PhD thesis — <em>Essays on Disability in Trinidad: A Mixed Methods Approach</em> — examined disability inclusion across education, employment, and social care. Her current research spans teaching and learning dynamics during the pandemic, and the experiences of persons with disabilities in education, employment, goods and services, and accommodations in Trinidad and Tobago.</p>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /panelists -->
+  </section><!-- /session1 -->
+
+  <!-- ════ SESSION 2 ════ -->
+  <section class="tab-panel" id="session2" role="tabpanel" aria-labelledby="tab2">
+
+    <div class="session-header">
+      <span class="session-tag">Session 2</span>
+      <h2 class="session-title">When One Batch Puts the Business at Risk</h2>
+      <p class="session-moderator-line">Moderated by <strong>Dr Marcia Nathai-Balkissoon</strong>, Department of Management Studies, The UWI St. Augustine</p>
+    </div>
+
+    <div class="panelists">
+
+      <!-- Ms Vashti Guyadeen -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/guyadeen.jpeg" alt="Ms Vashti Guyadeen" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Ms Vashti Guyadeen</h3>
+          <p class="card-org">CEO, T&amp;T Chamber of Industry and Commerce; President, Caribbean Women In Trade</p>
+          <div class="card-bio">
+            <p>Vashti Guyadeen is CEO of the Trinidad and Tobago Chamber of Industry and Commerce. With over 20 years' experience in research, policy, SME development, and global competitiveness, she has driven national initiatives and collaborated with global agencies to champion private-sector-led development.</p>
+            <p>She serves as President of Caribbean Women In Trade, member of the Advisory Board of the Shridath Ramphal Centre in Barbados, and Global Ambassador of the Pan African Leadership Institute for Trinidad and Tobago.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mr Edward Kacal -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/kacal.jpeg" alt="Mr Edward Kacal" style="object-position: center 65%;" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Mr Edward Kacal <span style="font-size:12px; font-weight:normal; color:#888;">BSc, MBA, PMP, CFM</span></h3>
+          <p class="card-org">Strategic Consultant; Committee Chair, T&amp;T Chamber of Commerce; President, Caribbean Chapter of IFMA</p>
+          <div class="card-bio">
+            <p>Edward Kacal's career centres on utilising his Engineering, Project, and Business Management expertise in strategic transformations, process reengineering, and cultural realignment. He operates across the spectrum from broad strategy to detailed tactical execution.</p>
+            <p>He has lectured at The UWI in Project Management and Strategic Planning, and is a licensed Instructor for Facility Management courses globally. His focus areas include process reengineering, performance management, strategic planning, succession planning, and change management.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mr Alvin Morton -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/morton.jpeg" alt="Mr Alvin Morton" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Mr Alvin Morton</h3>
+          <p class="card-org">Operations, Project Management &amp; Commercial Management Professional</p>
+          <div class="card-bio">
+            <p>Alvin Morton brings an extensive background in Operations, Project Management, and Commercial Management. His areas of expertise include leadership development, team building, strategic planning, and execution.</p>
+            <p>A Distinguished Toastmaster and active member of the organisation for almost 15 years, Alvin believes that the largest room in the world is the one for self-improvement.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mr Dale Parson -->
+      <article class="card">
+        <div class="card-photo-wrap">
+          <img src="images/parson.jpg" alt="Mr Dale Parson" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Panelist</span>
+          <h3 class="card-name">Mr Dale Parson</h3>
+          <p class="card-org">President, T&amp;T Manufacturers' Association; CEO, KPL Group Ltd.</p>
+          <div class="card-bio">
+            <p>Dale Parson is President of the Trinidad and Tobago Manufacturers' Association (TTMA) and Chair of the TTMA's Infrastructure Committee, as well as CEO of KPL Group Ltd. He holds a BSc in Engineering and an MSc in Strategic Leadership and Management, and is currently completing a PhD in Business Administration (Marketing).</p>
+            <p>He has acquired extensive knowledge and experience in manufacturing, competitiveness, international trade, strategic planning, and trade agreement negotiations, bringing a broad scope of industry expertise to the TTMA board.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr Marcia Nathai-Balkissoon – MODERATOR -->
+      <article class="card moderator-card">
+        <div class="card-photo-wrap">
+          <img src="images/nathai-balkissoon.jpg" alt="Dr Marcia Nathai-Balkissoon" />
+        </div>
+        <div class="card-body">
+          <span class="card-badge">Moderator</span>
+          <h3 class="card-name">Dr Marcia Nathai-Balkissoon</h3>
+          <p class="card-org">Lecturer, Department of Management Studies, The UWI St. Augustine</p>
+          <div class="card-bio">
+            <p>Dr Marcia Nathai-Balkissoon has lectured Business Strategy and Policy and various operations management courses at The UWI over the past 15 years. She also spent 15 years in industry roles including Engineer, Maintenance Manager, Productivity and Quality Consultant, and Auditor.</p>
+            <p>Marcia's research focuses on Operations Management and Strategy in manufacturing settings, as well as effective teaching and learning. She is the author of <em>Lighting the Path</em> and is currently conducting research on how high performers remain resilient in the face of unending demands across all areas of life.</p>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /panelists -->
+  </section><!-- /session2 -->
+
+</main>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <p><strong>Faculty of Social Sciences, The University of the West Indies, St. Augustine Campus</strong></p>
+  <p style="margin-top:6px;">RSVP: <a href="mailto:frances.hanson-lewis@uwi.edu" style="color:#f0a0a0;">frances.hanson-lewis@uwi.edu</a></p>
+  <p style="margin-top:12px; font-size:11px; opacity:0.5;">&copy; 2026 Faculty of Social Sciences, The UWI, St. Augustine</p>
+</footer>
+
+<script>
+  function switchTab(n) {
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === n - 1);
+      btn.setAttribute('aria-selected', i === n - 1 ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+      panel.classList.toggle('active', i === n - 1);
+    });
+  }
+</script>
+
+</body>
+</html>
